@@ -9,10 +9,8 @@ import bg1 from '../../assets/bg1.jpg'
 import bg2 from '../../assets/bg2.jpg'
 import bg3 from '../../assets/bg3.jpg'
 import { Carousel } from 'react-responsive-carousel';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../../context/auth';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-
 function index() {
 
     const router = useRouter()
@@ -21,14 +19,16 @@ function index() {
     const [error, setError] = React.useState('')
     const [loading, setLoading] = React.useState(false)
 
-    const { login,user } = useContext(AuthContext)
+    const { forgot,user } = useContext(AuthContext)
+
 
     const handleClick = async() => {
         try{
             setLoading(true)
             setError('')
-            await login(email, password)
-            console.log("Logged in!")
+            await forgot(email)
+            console.log("Email Sent")
+            router.push('/login')
         }catch(err){
             console.log(err)
             setError(err.message)
@@ -40,12 +40,7 @@ function index() {
     }
 
     useEffect(()=>{
-        console.log("login aaya")
-        if(user?.uid){
-            console.log(user)
-            console.log(user=="")
-            console.log(user==null)
-            console.log("user not equal to null")
+        if(user){
             router.push('/')
         }
         else{
@@ -77,8 +72,8 @@ function index() {
 
                     <TextField size="small" margin='dense' id="outlined-basic" fullWidth
                         label="Email" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <TextField size="small" margin='dense' id="outlined-basic" fullWidth
-                        label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    {/* <TextField size="small" margin='dense' id="outlined-basic" fullWidth
+                        label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} /> */}
 
                     {
                         error != '' &&
@@ -87,13 +82,13 @@ function index() {
 
                     <Button variant="contained" fullWidth
                         style={{ marginTop: '1rem' }} onClick={handleClick} disabled={loading}>
-                        Login In
+                        Send Email
                     </Button>
-                    <div style={{ color: 'blue', marginTop: '0.5rem' }}>Forgot Password ?</div>
+                    {/* <div style={{ color: 'blue', marginTop: '0.5rem' }}>Forgot Password ?</div> */}
 
                 </div>
                 <div className='bottom-card'>
-                    Don't Have an Account? <Link href="/signup"><span style={{ color: 'blue' }}>Sign Up</span></Link>
+                    Don't Have an Account? <span style={{ color: 'blue' }}>Sign Up</span>
                 </div>
             </div>
         </div>
