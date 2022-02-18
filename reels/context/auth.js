@@ -14,6 +14,8 @@ function AuthWrapper({ children }) {
             console.log(user)
             if(user){
                 setUser(user)
+            }else{
+                setUser('')
             }
         })
         setLoading(false);
