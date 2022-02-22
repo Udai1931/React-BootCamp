@@ -17,6 +17,7 @@ function AuthWrapper({ children }) {
             }else{
                 setUser('')
             }
+            
         })
         setLoading(false);
     },[])
