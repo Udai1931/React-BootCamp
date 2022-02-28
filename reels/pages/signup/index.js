@@ -28,9 +28,10 @@ function Index() {
             setError('')
             // auth -> unique id 
             const user = await signup(email, password)
+            console.log(user.uid)
             console.log("Signed Up!")
             // storage 
-            const storageRef = ref(storage, `${user.uid}/Profile`);
+            const storageRef = ref(storage, `${user.user.uid}/Profile`);
 
             const uploadTask = uploadBytesResumable(storageRef, file);
 
