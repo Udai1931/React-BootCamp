@@ -8,8 +8,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import {storage } from '../../firebase'
-function index() {
+import {db, storage } from '../../firebase'
+import { doc, setDoc } from 'firebase/firestore';
+function Index() {
 
     const router = useRouter()
     const [email, setEmail] = React.useState('')
@@ -25,8 +26,10 @@ function index() {
         try {
             setLoading(true)
             setError('')
+            // auth -> unique id 
             const user = await signup(email, password)
             console.log("Signed Up!")
+            // storage 
             const storageRef = ref(storage, `${user.uid}/Profile`);
 
             const uploadTask = uploadBytesResumable(storageRef, file);
@@ -49,8 +52,18 @@ function index() {
                 () => {
                     // Handle successful uploads on complete
                     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
                         console.log('File available at', downloadURL);
+                        let obj = {
+                            name: name,
+                            email: email,
+                            uid : user.user.uid,
+                            photoURL : downloadURL,
+                            posts:[]
+                        }
+                        // firestore 
+                        await setDoc(doc(db,"users",user.user.uid),obj)
+                        console.log("doc added")
                     });
                 }
             );
@@ -105,4 +118,4 @@ function index() {
     )
 }
 
-export default index
+export default Index

@@ -9,9 +9,9 @@ import bg1 from '../../assets/bg1.jpg'
 import bg2 from '../../assets/bg2.jpg'
 import bg3 from '../../assets/bg3.jpg'
 import { Carousel } from 'react-responsive-carousel';
-import { AuthContext } from '../../../context/auth';
+import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
-function index() {
+function Index() {
 
     const router = useRouter()
     const [email, setEmail] = React.useState('')
@@ -88,11 +88,11 @@ function index() {
 
                 </div>
                 <div className='bottom-card'>
-                    Don't Have an Account? <span style={{ color: 'blue' }}>Sign Up</span>
+                    Don&apos;t Have an Account? <span style={{ color: 'blue' }}>Sign Up</span>
                 </div>
             </div>
         </div>
     )
 }
 
-export default index
+export default Index

@@ -13,7 +13,7 @@ import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-function index() {
+function Index() {
 
     const router = useRouter()
     const [email, setEmail] = React.useState('')
@@ -93,11 +93,11 @@ function index() {
 
                 </div>
                 <div className='bottom-card'>
-                    Don't Have an Account? <Link href="/signup"><span style={{ color: 'blue' }}>Sign Up</span></Link>
+                    Don&apos;t Have an Account? <Link href="/signup"><span style={{ color: 'blue' }}>Sign Up</span></Link>
                 </div>
             </div>
         </div>
     )
 }
 
-export default index
+export default Index
